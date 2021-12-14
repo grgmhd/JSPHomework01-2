@@ -29,4 +29,64 @@ public class MemberDAO extends ConnOracle {
 		
 		return dto;
 	}
+	
+	public String findId(String name) {
+		
+		String findId = null;
+		String query = "SELECT id FROM member WHERE name=?";
+		
+		try {
+			psmt = conn.prepareStatement(query);
+			psmt.setString(1, name);
+			rSet = psmt.executeQuery();
+			
+			if(rSet.next()) {
+				findId = rSet.getString(1);
+			}
+		}
+		catch(Exception err) {
+			System.out.println("아이디 찾기 중 예외발생");
+			err.printStackTrace();
+		}
+		
+		return findId;
+	}
+	
+	public String findPw(String id, String name) {
+		String findPw = null;
+		String query = "SELECT pass FROM member WHERE id=? AND name=?";
+		
+		try {
+			psmt = conn.prepareStatement(query);
+			psmt.setString(1, id);
+			psmt.setString(2, name);
+			rSet = psmt.executeQuery();
+			
+			if(rSet.next()) {
+				findPw = rSet.getString(1);
+			}
+		}
+		catch(Exception err) {
+			System.out.println("비밀번호 찾기 중 예외발생");
+			err.printStackTrace();
+		}
+		
+		return findPw;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

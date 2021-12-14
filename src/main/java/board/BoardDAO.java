@@ -210,7 +210,6 @@ public class BoardDAO extends ConnOracle {
 		}
 		return selResult;
 	}
-	
 }
 
 

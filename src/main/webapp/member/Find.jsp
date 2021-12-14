@@ -32,17 +32,24 @@
         $('#idFind').click(function(){
             $('#item01').hide();
             $('#item02').show();
-            $('#item03').show();
+            $('#item03').hide();
             //$('#item04').show();
             //$('#item05').hide();
+            
+            $('#btn').val('아이디 찾기 >');
+            $('#msg').text('아이디를 찾기 위해 이름을 입력하세요.');
         });
         $('#pwFind').click(function(){
             $('#item01').show();
             $('#item02').show();
-            $('#item03').show();
+            $('#item03').hide();
             //$('#item04').show();
             //$('#item05').hide();
+            
+            $('#btn').val('비밀번호 찾기 >');
+            $('#msg').text('비밀번호를 찾기 위해 아이디와 이름을 입력하세요.');
         });
+        /*
         $('#choice').change(function(){
             if($('#choice').val()=='mobile'){
                 $('#item04').show();
@@ -53,74 +60,102 @@
                 $('#item05').show();
             }
         });
+        */
     });
+    
+    function validForm(form) {
+    	findValue = form.find.value;
+    	
+    	if(findValue == 'idFind' && !form.user_name.value) {
+    		alert("이름을 입력하세요");
+    		form.user_name.focus();
+    		return false;		
+    	}
+    	if(findValue == 'pwFind') {
+    		if(!form.user_id.value) {
+    			alert("아이디를 입력하세요");
+	    		form.user_id.focus();
+	    		return false;
+    		}
+    		if(!form.user_name.value) {
+    			alert("이름을 입력하세요");
+	    		form.user_name.focus();
+	    		return false;
+    		}
+    	}
+    }
     </script>
 </head>
 <body>
 <div id="AllWrap">
     <h2>아이디/비밀번호 찾기</h2>
-    <div id="RadioBox">
-        <input type="radio" name="find" id="idFind" checked>아이디찾기
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="radio" name="find" id="pwFind">비밀번호찾기
-    </div>
-    <div id="IdBox" class="">
-        <table align="center" id="InputTable">
-            <colgroup>
-                <col width="30%" />
-                <col width="70%" />
-            </colgroup>
-            <tr id="item01" style="display:none;">
-                <th><span class="bullet">&gt;</span><strong>아 이 디</strong></th>
-                <td>
-                    <input type="text" name="name" style="width:200px;">
-                </td>
-            </tr>
-            <tr id="item02">
-                <th><span class="bullet">&gt;</span><strong>이 름</strong></th>
-                <td>
-                    <input type="text" name="name" style="width:200px;">
-                </td>
-            </tr>
-            <tr id="item03">
-                <th>
-                    <span class="bullet">&gt;</span><select id="choice">
-                        <option value="mobile" selected>휴대전화</option>
-                        <option value="email">이메일</option>
-                    </select>
-                </th>
-                <td>
-                    <div id="item04">
-                        <input type="text" name="mobile1" style="width:40px;" maxlength="3"> -
-                        <input type="text" name="mobile2" style="width:50px;" maxlength="4"> -
-                        <input type="text" name="mobile3" style="width:50px;" maxlength="4">
-                    </div>
-                    <div id="item05" style="display:none;">
-                        <input type="text" name="email1" style="width:100px;"> @
-                        <input type="text" name="email2" style="width:100px;">
-                        <select name="" id="">
-                            <option value="">-- 선택 --</option>
-                            <option value="naver.com">naver.com</option>
-                            <option value="nate.com">nate.com</option>
-                            <option value="gmail.com">gmail.com</option>
-                            <option value="daum.net">daum.net</option>
-                            <option value="hanmail.net">hanmail.net</option>
-                            <option value="직접입력" selected>직접입력</option>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <div>
-            <img src="./images/g_line.gif" width="400" height="1" border="0" />
-            <br><br><br>
-            아이디를 찾기 위해서 이름과 휴대번호 혹은 이메일을 입력하세요.
-            <br><br><br>
-        </div>
-    </div>    
-    <div style="margin-top:20px;">
-        <input type="button" value="아이디 찾기 &gt;" id="btn">
-    </div>
+    
+    <form method="post" action="FindPrc.jsp" onsubmit="return validForm(this);">
+	    <div id="RadioBox">
+	        <input type="radio" name="find" id="idFind" value="idFind" checked>아이디찾기
+	        &nbsp;&nbsp;&nbsp;&nbsp;
+	        <input type="radio" name="find" id="pwFind" value="pwFind">비밀번호찾기
+	    </div>
+	    <div id="IdBox" class="">
+	        <table align="center" id="InputTable">
+	            <colgroup>
+	                <col width="30%" />
+	                <col width="70%" />
+	            </colgroup>
+	            <tr id="item01" style="display:none;">
+	                <th><span class="bullet">&gt;</span><strong>아 이 디</strong></th>
+	                <td>
+	                    <input type="text" name="user_id" style="width:200px;">
+	                </td>
+	            </tr>
+	            <tr id="item02">
+	                <th><span class="bullet">&gt;</span><strong>이 름</strong></th>
+	                <td>
+	                    <input type="text" name="user_name" style="width:200px;">
+	                </td>
+	            </tr>
+	            <!-- 
+	            <tr id="item03">
+	                <th>
+	                    <span class="bullet">&gt;</span><select id="choice">
+	                        <option value="mobile" selected>휴대전화</option>
+	                        <option value="email">이메일</option>
+	                    </select>
+	                </th>
+	                <td>
+	                    <div id="item04">
+	                        <input type="text" name="mobile1" style="width:40px;" maxlength="3"> -
+	                        <input type="text" name="mobile2" style="width:50px;" maxlength="4"> -
+	                        <input type="text" name="mobile3" style="width:50px;" maxlength="4">
+	                    </div>
+	                    <div id="item05" style="display:none;">
+	                        <input type="text" name="email1" style="width:100px;"> @
+	                        <input type="text" name="email2" style="width:100px;">
+	                        <select name="" id="">
+	                            <option value="">-- 선택 --</option>
+	                            <option value="naver.com">naver.com</option>
+	                            <option value="nate.com">nate.com</option>
+	                            <option value="gmail.com">gmail.com</option>
+	                            <option value="daum.net">daum.net</option>
+	                            <option value="hanmail.net">hanmail.net</option>
+	                            <option value="직접입력" selected>직접입력</option>
+	                        </select>
+	                    </div>
+	                </td>
+	            </tr>
+	            -->
+	        </table>
+	        <div>
+	            <img src="./images/g_line.gif" width="400" height="1" border="0" />
+	            <br><br><br>
+	            <span id="msg">아이디를 찾기 위해 이름을 입력하세요.</span>
+	            <br><br><br>
+	        </div>
+	    </div>    
+	    <div style="margin-top:20px;">
+	        <input type="submit" value="아이디 찾기 &gt;" id="btn">
+	    </div>
+    </form>
 </div>
 </body>
 </html>
